@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solar Prediction Model Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- bootstrap-css -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <!--// bootstrap-css -->
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all"/>
+    <!--// css -->
+    <!-- font-awesome icons -->
+    <link href="../static/css/font-awesome.css" rel="stylesheet">
+    <!-- //font-awesome icons -->
+    <!-- gallery -->
+    <link href='../static/css/simplelightbox.min.css' rel='stylesheet' type='text/css'>
+    <!-- //gallery -->
+    <!-- font -->
+    <link href='#css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='#css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- //font -->
+    <script src="../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <!-- parallax -->
+    <script src="../static/js/SmoothScroll.min.js"></script>
+
+   <!-- //parallax -->
+    <style>
+        .gallery {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 10px 20px 15px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: auto;
+            width: 425px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        .model-info-box {
+            height: 384px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f9f9f9;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .arrowForSeg {
+            padding-top: 175px;
+            padding-left: 35px;
+            padding-right: 35px;
+            display: flex;
+            align-items: center;
+        }
+
+        .controls, .metrics {
+            background-color: #fff;
+            padding: 15px;
+            width: 100%;
+            text-align: center;
+        }
+
+        button {
+            border: none;
+            padding: 10px 30px;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            background-color: #005bc0;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+
+        .metric-table {
+            font-size: 14px;
+        }
+
+        .metric-table th {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .metric-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .metric-value {
+            font-weight: normal;
+            color: #007bff;
+        }
+
+        .custom-file-label {
+            display: block;
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .custom-file-label:hover {
+            opacity: 0.9;
+            background-color: #419445;
+            transform: translateY(-2px);
+        }
+
+        .custom-file-label, #predictButton {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .full-metrics-container {
+          width: 100%;
+          height: 100%;
+          background-color: #f9f9f9;
+          border-radius: 20px;
+          padding: 25px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .metrics-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .metric-title {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .metrics-icon {
+          font-size: 36px;
+          color: #4CAF50;
+          margin-bottom: 10px;
+        }
+
+        .metrics-subtitle {
+          color: #666;
+          font-size: 14px;
+          margin-top: 5px;
+        }
+
+        .metrics-content {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .empty-state {
+          text-align: center;
+          padding: 40px 20px;
+          color: #888;
+        }
+
+        .empty-icon {
+          font-size: 48px;
+          margin-bottom: 15px;
+          color: #ddd;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);  /* 从 3 改为 4 */
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .empty-hint {
+          font-size: 13px;
+          margin-top: 10px;
+        }
+        .metric-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .metric-section-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .metric-section-title i {
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+        .loading-state {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-icon {
+            font-size: 36px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        .model-icon {
+            font-size: 48px;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .arrowForSeg {
+                padding: 20px 0;
+                transform: rotate(90deg);
+            }
+
+            .box {
+                width: 90%;
+            }
+        }
+        .upload-progress {
+            background: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        progress {
+            height: 20px;
+            border-radius: 4px;
+        }
+        progress::-webkit-progress-bar {
+            background-color: #eee;
+        }
+        progress::-webkit-progress-value {
+            background-color: #4CAF50;
+        }
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        .stage {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .stage-dot {
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: #ddd;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+        }
+
+        .stage.active .stage-dot {
+            background: #4CAF50;
+            box-shadow: 0 0 8px rgba(76,175,80,0.3);
+        }
+
+        .time-estimate {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .model-insight-section {
+            margin-top: 40px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .insight-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .insight-icon {
+            font-size: 2.5em;
+            color: #2196F3;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .weather-type h4 {
+            color: #607D8B;
+            border-bottom: 2px solid #B0BEC5;
+            padding-bottom: 10px;
+        }
+
+        .visualization-note {
+            margin-top: 25px;
+            background: #e3f2fd;
+            border-color: #90CAF9;
+        }
+
+        .heat-red {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .file-upload-group {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .file-info-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        .file-info-item i {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #4CAF50;
+        }
+
+        .carousel-caption {
+            background: rgba(0,0,0,0.6);
+            border-radius: 4px;
+            padding: 8px 15px;
+        }
+
+        .color-scale-legend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .gradient-bar {
+            width: 200px;
+            height: 20px;
+            background: linear-gradient(90deg, #4CAF50 0%, #FFC107 50%, #F44336 100%);
+            border-radius: 4px;
+        }
+
+        .error-visualization {
+            text-align: center;
+            padding: 40px;
+            color: #F44336;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+            opacity: 1 !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .carousel-indicators {
+            bottom: -40px;
+        }
+
+        .carousel-indicators li {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        .carousel-indicators .active {
+            background-color: #007bff;
+        }
+        .carousel-indicators {
+            bottom: -45px;
+        }
+
+        .carousel-indicators li {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        /* 兼容深色模式 */
+        @media (prefers-color-scheme: dark) {
+            .carousel-item img {
+                background: #212529 !important;
+            }
+        }
+        .custom-carousel {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .carousel-inner {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .carousel-item.active {
+            position: relative;
+            opacity: 1;
+        }
+
+        .carousel-prev,
+        .carousel-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.3);
+            border: none;
+            color: white;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .carousel-prev { left: 15px; }
+        .carousel-next { right: 15px; }
+
+        .carousel-prev:hover,
+        .carousel-next:hover {
+            background: rgba(0,0,0,0.5);
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<!-- banner -->
+<div class="banner about-bg">
+    <div class="top-banner about-top-banner">
+        <div class="container">
+            <div class="top-banner-left">
+                <ul>
+                    <li><i class="fa fa-phone" aria-hidden="true"></i> +18280376091</li>
+                    <li><a href="mailto:li.wanning@student.zy.cdut.edu.cn"><i class="fa fa-envelope"
+                                                                              aria-hidden="true"></i>
+                        li.wanning@student.zy.cdut.edu.cn</a></li>
+                </ul>
+            </div>
+            <div class="top-banner-right">
+                <ul>
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a class="facebook" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a class="facebook" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                    <li><a class="facebook" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>
+                    <a href="/">SolarPrediction</a>
+                </h1>
+            </div>
+            <div class="top-nav">
+                <nav class="navbar navbar-default">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">Menu
+                    </button>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="">Codes</a></li>
+                            <li><a href="">About</a></li>
+                            <div class="clearfix"></div>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- //banner -->
+
+<!-- a-about -->
+<div class="a-grid">
+    <div class="container">
+        <div class="w3l-about-heading">
+            <h2>Solar Prediction Model Analysis</h2>
+            <p>Upload your solar prediction HDF5 model files to analyze performance metrics</p>
+        </div>
+        <div class="gallery">
+            <div class="box">
+                <div class="model-info-box" id="modelInfoBox">
+                    <i class="fa fa-sun-o model-icon" aria-hidden="true"></i>
+                    <p>Upload Files</p>
+                </div>
+                <div class="controls">
+                    <input type="file" id="h5Upload" accept=".h5,.hdf5" style="display: none;">
+                    <label for="h5Upload" class="custom-file-label">Choose HDF5 File</label>
+                    <input type="file" id="npyUpload" accept=".npy" style="display: none;">
+                    <label for="npyUpload" class="custom-file-label">Time Data (.npy)</label>
+
+                    <button id="analyzeButton" disabled>Analyze Model</button>
+                <div class="upload-progress" id="uploadProgress" style="display: none; margin-top: 10px;">
+                    <progress value="0" max="100" style="width: 80%;"></progress>
+                    <span id="progressText" style="font-size: 12px;">0%</span>
+                </div>
+                </div>
+            </div>
+
+            <div class="arrowForSeg">
+                <img src="../static/images/arrowForSeg.png" alt="arrow" height="100" width="100">
+            </div>
+
+            <div class="box">
+                <div class="full-metrics-container" id="metric">
+                    <div class="metrics-header">
+                        <i class="fa fa-bar-chart metrics-icon" aria-hidden="true"></i>
+                        <h3>Solar Prediction Metrics</h3>
+                        <p class="metrics-subtitle">Upload a model file to view detailed performance analysis</p>
+                    </div>
+                    <div id="metricsContent" class="metrics-content">
+                        <div class="empty-state">
+                            <i class="fa fa-cloud-upload empty-icon" aria-hidden="true"></i>
+                            <p>No model analyzed yet</p>
+                            <p class="empty-hint">Upload a solar prediction HDF5 model to begin analysis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="model-insight-section">
+                <div class="insight-header">
+                    <i class="fa fa-binoculars insight-icon"></i>
+                    <h3>Model Attention Visualization</h3>
+                    <p class="insight-subtitle">Grad-CAM heatmaps showing model's focus areas</p>
+                </div>
+
+                <div id="heatmapCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" id="heatmapContainer">
+                    </div>
+                    <a class="carousel-control-prev" href="#heatmapCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#heatmapCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div class="color-scale-legend">
+                    <span>Low Attention</span>
+                    <div class="gradient-bar"></div>
+                    <span>High Attention</span>
+                </div>
+            </div>
+            <div class="visualization-status">
+                <div id="vis-loading" class="alert alert-info" style="display: none;">
+                    <i class="fa fa-spinner fa-spin"></i>
+                    The visualization is being generated, please wait...
+                </div>
+                <div id="vis-error" class="alert alert-danger" style="display: none;"></div>
+            </div>
+
+            <script>
+                // File upload handling
+                const h5Upload = document.getElementById('h5Upload');
+                const npyUpload = document.getElementById('npyUpload');
+                let uploadedFiles = {h5: null, npy: null};
+
+                // Handle dual file upload
+                function handleFileUpload(type, file) {
+                    if (!file) return;
+
+                    // File type validation
+                    const validExt = type === 'h5' ? /\.(h5|hdf5)$/i : /\.npy$/i;
+                    if (!file.name.match(validExt)) {
+                        alert(`Invalid ${type.toUpperCase()} file format`);
+                        return false;
+                    }
+
+                    // Display file information
+                    const fileInfo = `
+                                    <div class="file-info-item">
+                                        <i class="fa fa-file-${type == 'h5' ? 'code' : 'clock-o'}"></i>
+                                        <div>
+                                            <p>${file.name}</p>
+                                            <small>${(file.size/1024/1024).toFixed(2)} MB</small>
+                                        </div>
+                                    </div>
+                                `;
+
+                    modelInfoBox.insertAdjacentHTML('beforeend', fileInfo);
+                    return true;
+                }
+
+                // HDF5 file upload processing
+                h5Upload.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (handleFileUpload('h5', file)) {
+                        uploadedFiles.h5 = file;
+                        checkUploadStatus();
+                    } else {
+                        this.value = '';
+                    }
+                });
+
+                // NPY file upload processing
+                npyUpload.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (handleFileUpload('npy', file)) {
+                        uploadedFiles.npy = file;
+                        checkUploadStatus();
+                    } else {
+                        this.value = '';
+                    }
+                });
+
+                // Check upload status
+                function checkUploadStatus() {
+                    analyzeButton.disabled = !(uploadedFiles.h5 && uploadedFiles.npy);
+                }
+
+                // Update analyze button click handler
+                analyzeButton.addEventListener('click', async function () {
+                    if (!uploadedFiles.h5 || !uploadedFiles.npy) return;
+
+                    const metricsContent = document.getElementById('metricsContent');
+                    metricsContent.innerHTML = `
+                                    <div class="loading-state">
+                                        <div class="loading-spinner"></div>
+                                        <p>Analyzing model performance...</p>
+                                    </div>
+                                `;
+
+                    try {
+                        const formData = new FormData();
+                        formData.append('file', uploadedFiles.h5);
+                        formData.append('times_test', uploadedFiles.npy);
+
+                        console.log("Sending request to server..."); // Add debug log
+                        const response = await fetch('/functions/predict', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const result = await response.json();
+                        console.log("Server response:", result); // Add debug log
+
+                        if (!response.ok) {
+                            throw new Error(result.error || 'Analysis failed');
+                        }
+
+                        displayAnalysis(result);
+                    } catch (error) {
+                        console.error("Analysis error:", error); // Add detailed error log
+                        showError(error.message);
+                    }
+                });
+
+                // Check upload status
+                function checkUploadStatus() {
+                    analyzeButton.disabled = !(uploadedFiles.h5 && uploadedFiles.npy);
+                }
+
+
+                // Updated results display function
+                function displayAnalysis(data) {
+                    const metricsContent = document.getElementById('metricsContent');
+
+                    // Enhanced data validation
+                    if (!data.metrics || typeof data.metrics !== 'object') {
+                        throw new Error("Invalid metrics data structure");
+                    }
+
+                    // Ensure getting fixed sample_ratio from backend
+                    const sample_ratio = 0.2; // Force using known value
+
+                    // Safe calculation logic
+                    const totalSamplesEstimate = data.metrics?.processed_samples
+                            ? Math.round(data.metrics.processed_samples / sample_ratio)
+                            : 'N/A'; // Handle undefined case
+
+                    // Ensure visualization data is correctly sorted
+                    const sortedVisualization = (data.visualization || [])
+                            .map(url => ({url, layer: parseInt(url.match(/layer_(\d+)/)?.[1] || 0)}))
+                            .sort((a, b) => a.layer - b.layer)
+                            .map(item => item.url);
+
+                    // Error-tolerant metric card generation
+                    const metricItems = ['rmse', 'mae', 'r2', 'evs'].map(key => {
+                        const value = data.metrics[key] ?? 'N/A';
+                        return `
+                                        <div class="metric-item">
+                                            <div class="metric-label">${key.toUpperCase()}</div>
+                                            <div class="metric-value">${typeof value === 'number' ? value.toFixed(4) : value}</div>
+                                            <div class="metric-desc">${getMetricDescription(key)}</div>
+                                        </div>
+                                    `;
+                    }).join('');
+
+                    metricsContent.innerHTML = `
+                                    <div class="result-container">
+                                        <!-- Metadata card -->
+                                        <div class="meta-card">
+                                            <h3><i class="fa fa-database"></i> Dataset Information</h3>
+                                            <div class="meta-grid">
+                                                <div class="meta-item">
+                                                    <span>Total Samples</span>
+                                                    <strong> = ${totalSamplesEstimate.toLocaleString()}</strong>
+                                                </div>
+                                                <div class="meta-item">
+                                                    <span>Analyzed Samples</span>
+                                                    <strong> = ${data.metrics.processed_samples.toLocaleString()}</strong>
+                                                </div>
+                                                <div class="meta-item highlight">
+                                                    <span>Sampling Ratio</span>
+                                                    <strong> = 0.2</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Metrics card -->
+                                        <div class="metrics-card">
+                                            <h3><i class="fa fa-line-chart"></i> Prediction Metrics</h3>
+                                            <div class="metrics-grid">
+                                                <div class="metric-item">
+                                                    <div class="metric-label">RMSE</div>
+                                                    <div class="metric-value">${data.metrics.rmse.toFixed(4)}</div>
+                                                    <div class="metric-desc">Root Mean Squared Error</div>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <div class="metric-label">MAE</div>
+                                                    <div class="metric-value">${data.metrics.mae.toFixed(4)}</div>
+                                                    <div class="metric-desc">Mean Absolute Error</div>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <div class="metric-label">R²</div>
+                                                    <div class="metric-value">${data.metrics.r2.toFixed(4)}</div>
+                                                    <div class="metric-desc">Coefficient of Determination</div>
+                                                </div>
+                                                <div class="metric-item">
+                                                    <div class="metric-label">EVS</div>
+                                                    <div class="metric-value">${data.metrics.evs.toFixed(4)}</div>
+                                                    <div class="metric-desc">Explained Variance Score</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                `;
+                    try {
+                        if (data.visualization) {
+                            const urls = typeof data.visualization === 'string'
+                                    ? [data.visualization]
+                                    : data.visualization;
+
+                            if (urls.length > 0) {
+                                console.log("Preparing to display visualization:", urls);
+                                updateVisualization(urls);
+                            } else {
+                                throw new Error('No available heatmap URLs');
+                            }
+                        } else {
+                            throw new Error('Missing visualization data in response');
+                        }
+                    } catch (e) {
+                        console.error('Visualization processing failed:', e);
+                        document.getElementById('heatmapContainer').innerHTML = `
+                                        <div class="alert alert-danger">
+                                            <p>Heatmap display error</p>
+                                            <small>${e.message}</small>
+                                        </div>
+                                    `;
+                    }
+                }
+
+
+                function getMetricDescription(key) {
+                    const descriptions = {
+                        rmse: 'Root Mean Squared Error',
+                        mae: 'Mean Absolute Error',
+                        r2: 'Coefficient of Determination',
+                        evs: 'Explained Variance Score'
+                    };
+                    return descriptions[key] || 'Metric';
+                }
+
+
+                // Visualization update function
+                function updateVisualization(urls) {
+                    const container = document.getElementById('heatmapContainer');
+                    container.innerHTML = '<div class="loading">Generating comprehensive heatmap...</div>';
+
+                    // Ensure urls is an array
+                    if (!Array.isArray(urls)) {
+                        urls = [urls];
+                    }
+
+                    // Clear container
+                    container.innerHTML = '';
+
+                    // Load all images
+                    urls.forEach((originalUrl, index) => {
+                        // Remove any existing timestamp parameters from URL
+                        const cleanUrl = originalUrl.split('?')[0];
+                        // Add new timestamp
+                        const freshUrl = `${cleanUrl}?t=${Date.now()}`;
+
+                        const imgWrapper = document.createElement('div');
+                        imgWrapper.className = 'heatmap-wrapper';
+
+                        const img = new Image();
+                        img.src = freshUrl;
+                        img.className = 'heatmap-img';
+                        img.style.maxWidth = '100%';
+                        img.style.height = 'auto';
+
+                        img.onload = () => {
+                            console.log(`Image #${index+1} loaded successfully:`, freshUrl);
+                            imgWrapper.innerHTML = ''; // Clear any loading state
+                            imgWrapper.appendChild(img);
+                        };
+
+                        img.onerror = (e) => {
+                            console.error(`Image #${index+1} failed to load:`, freshUrl, e);
+                            imgWrapper.innerHTML = `
+                                <div class="alert alert-danger">
+                                    <p>Heatmap loading failed</p>
+                                    <small>URL: ${freshUrl}</small>
+                                    <button onclick="this.parentElement.querySelector('img').src='${freshUrl}'">
+                                        Retry
+                                    </button>
+                                </div>
+                            `;
+                        };
+
+                        container.appendChild(imgWrapper);
+                    });
+                }
+
+
+                function renderCarousel(urls) {
+                    const container = document.getElementById('heatmapContainer');
+                    container.innerHTML = `
+                        <div class="carousel">
+                            ${urls.map(url => `
+                            <div class="carousel-item">
+                            <img src="${url}" class="heatmap-img">
+                            </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                    // Add simple manual switching logic
+                    let current = 0;
+                    document.querySelectorAll('.carousel-item').forEach((item, index) => {
+                        item.style.display = index === 0 ? 'block' : 'none';
+                    });
+
+                    // Add navigation buttons
+                    container.innerHTML += `
+                        <button class="carousel-prev">❮</button>
+                        <button class="carousel-next">❯</button>
+                    `;
+
+                    // Event binding
+                    container.querySelector('.carousel-prev').addEventListener('click', () => {
+                        document.querySelectorAll('.carousel-item')[current].style.display = 'none';
+                        current = (current - 1 + urls.length) % urls.length;
+                        document.querySelectorAll('.carousel-item')[current].style.display = 'block';
+                    });
+
+                    container.querySelector('.carousel-next').addEventListener('click', () => {
+                        document.querySelectorAll('.carousel-item')[current].style.display = 'none';
+                        current = (current + 1) % urls.length;
+                        document.querySelectorAll('.carousel-item')[current].style.display = 'block';
+                    });
+                }
+
+                function initCarousel() {
+                    const carousel = $('#heatmapCarousel');
+                    if (carousel.data('bs.carousel')) {
+                        carousel.carousel('dispose');
+                    }
+
+                    carousel.carousel({
+                        interval: 5000,
+                        keyboard: true,
+                        ride: 'carousel'
+                    });
+
+                    // Add layer sequence indicator
+                    const indicators = document.createElement('ol');
+                    indicators.className = 'carousel-indicators';
+                    urls.forEach((_, i) => {
+                        const li = document.createElement('li');
+                        li.dataset.target = '#heatmapCarousel';
+                        li.dataset.slideTo = i;
+                        if (i === 0) li.className = 'active';
+                        indicators.appendChild(li);
+                    });
+                    carousel.prepend(indicators);
+                }
+
+                // Enhanced error handling
+                function showError(message) {
+                    const metricsContent = document.getElementById('metricsContent');
+                    metricsContent.innerHTML = `
+                        <div class="error-state">
+                            <div class="error-icon">
+                                <i class="fa fa-exclamation-triangle"></i>
+                            </div>
+                            <h4>Analysis Error</h4>
+                            <p>${message}</p>
+                            <button class="retry-btn" onclick="location.reload()">
+                                <i class="fa fa-refresh"></i> Try Again
+                            </button>
+                        </div>
+                    `;
+
+                    // Clear visualization area
+                    const heatmapContainer = document.getElementById('heatmapContainer');
+                    heatmapContainer.innerHTML = `
+                        <div class="error-visualization">
+                            <i class="fa fa-exclamation-circle fa-2x"></i>
+                            <p>Visualization unavailable</p>
+                        </div>
+                    `;
+                }
+            </script>
+        </div>
+    </div>
+</div>
+<!-- //a-about -->
+<!-- footer -->
+<div class="footer">
+    <div class="container">
+        <div class="footer-grids">
+            <div class="col-md-3 footer-grid">
+                <div class="footer-grid-heading">
+                    <h4>Address</h4>
+                </div>
+                <div class="footer-grid-info">
+                    <p>CDUT
+                        <span>No.1, East Third Road, Erxianqiao, Chenghua District, Chengdu, China</span>
+                    </p>
+                    <p class="phone">Phone : +18280376091
+                        <span>Email : <a href="mailto:li.wanning@student.zy.cdut.edu.cn">li.wanning@student.zy.cdut.edu.cn</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 footer-grid">
+                <div class="footer-grid-heading">
+                    <h4>Navigation</h4>
+                </div>
+                <div class="footer-grid-info">
+                    <ul>
+                        <li><a href="">Codes</a></li>
+                        <li><a href="">About</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 footer-grid">
+                <div class="footer-grid-heading">
+                    <h4>Special thanks</h4>
+                </div>
+                <div class="footer-grid-info">
+                    <p>ChengDu university of Technology & Oxford Brookes University
+                        <span>For Educational resources provided</span>
+                    </p>
+                    <br>
+                    <p>Tutor: Grace
+                        <span>For Technical guidance provided</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-3 footer-grid">
+                <div class="footer-grid-heading">
+                    <h4>Follow</h4>
+                </div>
+                <div class="social">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="copyright">
+            <p>Copyright &copy; 2025 by Aura. All rights reserved.</p>
+        </div>
+    </div>
+</div>
+<!-- //footer -->
+</body>
+</html>

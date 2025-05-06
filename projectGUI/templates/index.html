@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- bootstrap-css -->
+<link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!--// bootstrap-css -->
+<!-- css -->
+<link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all" />
+<!--// css -->
+<link rel="stylesheet" href="../static/css/ken-burns.css">
+<!-- font-awesome icons -->
+<link href="../static/css/font-awesome.css" rel="stylesheet">
+<!-- //font-awesome icons -->
+<!-- font -->
+<link href='#css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+<link href='#css?family=Pacifico' rel='stylesheet' type='text/css'>
+<!-- //font -->
+<script src="../static/js/jquery-1.11.1.min.js"></script>
+<script src="../static/js/bootstrap.js"></script>
+<style>
+    /* Add this style to center the functions grid */
+    .about-grids {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+</style>
+</head>
+<body>
+	<!-- banner -->
+	<div class="banner">
+		<div class="top-banner">
+			<div class="container">
+				<div class="top-banner-left">
+					<ul>
+						<li><i class="fa fa-phone" aria-hidden="true"></i> +18280376091</li>
+						<li><a href="mailto:li.wanning@student.zy.cdut.edu.cn"><i class="fa fa-envelope" aria-hidden="true"></i> li.wanning@student.zy.cdut.edu.cn</a></li>
+					</ul>
+				</div>
+				<div class="top-banner-right">
+					<ul>
+						<li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li><a class="facebook" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li><a class="facebook" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+						<li><a class="facebook" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+		<div class="header">
+			<div class="container">
+				<div class="logo">
+					<h1>
+						<a href="/">SolarPrediction</a>
+					</h1>
+				</div>
+				<div class="top-nav">
+					<nav class="navbar navbar-default">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Menu
+							</button>
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">
+								<li><a class="active" href="/">Home</a></li>
+								<li><a href="#functions">Functions</a></li>
+								<li><a href="#dataset">Dataset</a></li>
+								<li><a href="https://github.com/Aura8998/solar-prediction">Codes</a></li>
+								<li><a href="#footer">About</a></li>
+{#								<li><a href="">Contact</a></li>#}
+								<div class="clearfix"> </div>
+							</ul>
+						</div>
+					</nav>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!-- //banner -->
+	<div id="kb" class="carousel kb_elastic animate_text kb_wrapper" data-ride="carousel" data-interval="6000" data-pause="hover">
+            <!-- Wrapper for Slides -->
+            <div class="carousel-inner" role="listbox">
+                <!-- First Slide -->
+                <div class="item active">
+					<div class="slider">
+						<div class="carousel-caption kb_caption slider-grid">
+							<h3>Model overview</h3>
+							<p>Our solar energy prediction model leverages advanced deep learning techniques to accurately
+                                forecast photovoltaic power generation based on sky images.</p>
+						</div>
+					</div>
+                </div>
+
+                <!-- Second Slide -->
+                <div class="item">
+					<div class="slider slider1">
+						<div class="carousel-caption kb_caption kb_caption_right slider-grid">
+							<h3>Results Showcase</h3>
+							<p>Results showcase the prediction performance and using Grad-CAM highlight
+                                sky-image regions that most influence PV output.</p>
+						</div>
+					</div>
+                </div>
+
+                <!-- Third Slide -->
+                <div class="item">
+					<div class="slider slider2">
+						<div class="carousel-caption kb_caption kb_caption_center slider-grid">
+						   <h3>Technical details</h3>
+							<p>Combine CNN with spatial and SE attention mechanisms to process
+                                sky imaged and historical power generation, enabling precise short-term forecasting.</p>
+						</div>
+					</div>
+                </div>
+
+            </div>
+            <!-- Navigation Buttons -->
+            <!-- Left Button -->
+            <a class="left carousel-control kb_control_left" href="#kb" role="button" data-slide="prev">
+                <span class="fa fa-angle-left kb_icons" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <!-- Right Button -->
+            <a class="right carousel-control kb_control_right" href="#kb" role="button" data-slide="next">
+                <span class="fa fa-angle-right kb_icons" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+    </div>
+	<!-- about -->
+	<div id="functions" class="about">
+		<div class="container">
+			<div class="w3l-about-heading">
+				<h2>Explore Features</h2>
+				<p>Click the button below to experience the corresponding function</P>
+			</div>
+
+			<div class="about-grids">
+                <a href="/functions/dataDisplay" class="col-md-3 about-grid">
+                    <div class="about-grid-info effect-1">
+                        <h4>Dataset Display</h4>
+                    </div>
+                    <p>"Interactive charts and sky images showing historical PV generation patterns."</p>
+                </a>
+                <a href="/functions/predictModel" class="col-md-3 about-grid">
+                    <div class="about-grid-info about-grid-info1 effect-1">
+                        <h4>Performance</h4>
+                    </div>
+                    <p>"Accuracy comparisons against traditional models across weather conditions."</p>
+                </a>
+                <a href="https://github.com/Aura8998/solar-prediction" class="col-md-3 about-grid">
+                    <div class="about-grid-info about-grid-info3 effect-1">
+                        <h4>Code</h4>
+                    </div>
+                    <p>"The overall code of this project"</p>
+                </a>
+                <div class="clearfix"> </div>
+            </div>
+		</div>
+	</div>
+	<!-- //about -->
+	<!-- offer -->
+	<div id="dataset" class="offer">
+		<div class="container">
+			<div class="wthree-offer-grid">
+				<h4>SKIPPD Dataset</h4>
+				<p>The SKIPPD dataset from Stanford University provides 3 years (2017-2019)
+                    of 1-min interval sky images (64×64) captured by a fisheye camera
+                    and paired PV output data from a 30-kW rooftop array. Designed for
+                    deep learning-based solar forecasting, it also supports research in
+                    cloud classification, segmentation, and motion prediction.
+                    Raw high-resolution data is available.
+                </p>
+				<div class="click-button">
+					<a href="https://arxiv.org/abs/2207.00913">Dataset Website</a>
+			 </div>
+			</div>
+		</div>
+	</div>
+	<!-- //offer -->
+	<!-- news -->
+
+	<!-- //news -->
+	<!-- footer -->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-grids">
+				<div class="col-md-3 footer-grid">
+					<div class="footer-grid-heading">
+						<h4>Address</h4>
+					</div>
+					<div class="footer-grid-info">
+						<p>CDUT
+							<span>No.1, East Third Road, Erxianqiao, Chenghua District, Chengdu, China</span>
+						</p>
+						<p class="phone">Phone : +18280376091
+							<span>Email : <a href="mailto:li.wanning@student.zy.cdut.edu.cn">li.wanning@student.zy.cdut.edu.cn</a></span>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-3 footer-grid">
+					<div class="footer-grid-heading">
+						<h4>Navigation</h4>
+					</div>
+					<div class="footer-grid-info">
+						<ul>
+							<li><a href="#functions">Functions</a></li>
+                            <li><a href="#dataset">Dataset</a></li>
+                            <li><a href="https://github.com/Aura8998/solar-prediction">Codes</a></li>
+                            <li><a href="#footer">About</a></li>
+						</ul>
+					</div>
+				</div>
+
+                <div class="col-md-3 footer-grid">
+					<div class="footer-grid-heading">
+						<h4>Special thanks</h4>
+					</div>
+					<div class="footer-grid-info">
+						<p>ChengDu university of Technology & Oxford Brookes University
+							<span>For Educational resources provided</span>
+						</p>
+                        <br>
+                        <p>Tutor: Grace
+							<span>For Technical guidance provided</span>
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-3 footer-grid">
+					<div class="footer-grid-heading">
+						<h4>Follow</h4>
+					</div>
+					<div class="social">
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-rss"></i></a></li>
+							<li><a href="#"><i class="fa fa-vk"></i></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="clearfix"> </div>
+			</div>
+			<div class="copyright">
+				<p>Copyright &copy; 2025 by Aura. All rights reserved.</p>
+			</div>
+		</div>
+	</div>
+	<!-- //footer -->
+	<script src="../static/js/SmoothScroll.min.js"></script>
+</body>	
+</html>
