@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Display</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content=""/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- bootstrap-css -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <!--// bootstrap-css -->
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css" media="all"/>
+    <!--// css -->
+    <!-- font-awesome icons -->
+    <link href="../static/css/font-awesome.css" rel="stylesheet">
+    <!-- //font-awesome icons -->
+    <!-- gallery -->
+    <link href='../static/css/simplelightbox.min.css' rel='stylesheet' type='text/css'>
+    <!-- //gallery -->
+    <!-- font -->
+    <link href='#css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='#css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- //font -->
+    <script src="../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <!-- parallax -->
+    <script src="../static/js/SmoothScroll.min.js"></script>
+    <!-- //parallax -->
+    <style>
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 10px 20px 15px 5px rgba(0, 0, 0, 0.1);
+            width: 350px; /
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .content-image {
+            max-width: 600px;
+            max-height: 400px;
+            width: auto;
+            height: auto;
+            display: block;
+            margin: 0 auto 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dataset-image {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dataset-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-caption {
+            margin-top: 12px;
+            font-size: 15px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* 画廊布局优化 */
+        .gallery-item {
+            width: 100%;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .single-image-display {
+            max-width: 650px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .processing-step {
+            flex: 1;
+            min-width: 280px;
+            max-width: 320px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-section {
+            padding: 30px;
+        }
+
+        .image-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .category-title {
+            text-align: center;
+            margin: 0 0 25px 0;
+            color: #2c3e50;
+            font-size: 1.5em;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .gallery-column {
+            flex: 0 1 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .single-process-image {
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .single-process-image img {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .controls {
+            background-color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        button {
+            border: none;
+            padding: 10px 30px;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            background-color: #005bc0;
+        }
+
+        .custom-file-label {
+            display: block;
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .custom-file-label:hover {
+            opacity: 0.9;
+            background-color: #419445;
+        }
+
+        .section-light {
+            background-color: #f8f9fa;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .section-medium {
+            background-color: #e9ecef;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .section-dark {
+            background-color: #dee2e6;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .data-display-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- banner -->
+    <div class="banner about-bg">
+        <div class="top-banner about-top-banner">
+            <div class="container">
+                <div class="top-banner-left">
+                    <ul>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i> +18280376091</li>
+                        <li><a href="mailto:li.wanning@student.zy.cdut.edu.cn"><i class="fa fa-envelope"
+                                                                                  aria-hidden="true"></i>
+                            li.wanning@student.zy.cdut.edu.cn</a></li>
+                    </ul>
+                </div>
+                <div class="top-banner-right">
+                    <ul>
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a class="facebook" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a class="facebook" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                        <li><a class="facebook" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="header">
+            <div class="container">
+                <div class="logo">
+                    <h1>
+                        <a href="/">SolarPrediction</a>
+                    </h1>
+                </div>
+                <div class="top-nav">
+                    <nav class="navbar navbar-default">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1">Menu
+                        </button>
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="https://github.com/Aura8998/solar-prediction">Codes</a></li>
+                                <li><a href="">About</a></li>
+                                <div class="clearfix"></div>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <!-- //banner -->
+
+    <!-- a-about -->
+    <div class="a-grid">
+        <div class="container">
+            <h1 class="data-display-title">Dataset Display</h1>
+
+            <!-- Dataset Information Section -->
+            <div class="dataset-intro section-light">
+                <h2 class="section-title">Dataset Overview</h2>
+                <div class="dataset-description">
+                    <p>
+                        The dataset contains the following two levels of data which distinguishes
+                        it from most of the existing open-sourced solar forecasting datasets and
+                        makes it especially suitable for deep-learning-based solar forecasting research:
+                    </p>
+                    <ul class="dataset-stats">
+                        <li><strong>Benchmark dataset:</strong> 3 years of processed sky images (64×64)
+                            and concurrent PV power generation data with 1-min interval that are
+                            ready-to-use for deep learning model development</li>
+                        <li><strong>Raw dataset:</strong> Overlapping high resolution sky video footage
+                            (2048×2048) recorded at 20 frames per second, sky image frames (2048×2048)
+                            and history PV power generation data logged in 1-min frequency that suit
+                            various research purposes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sky Image Section -->
+            <div class="sky-image-section section-medium">
+                <h2 class="section-title">Sky Images Collection</h2>
+                <div class="section-content">
+                    <p><strong>About the Sky Images</strong><br>
+                        Our daytime sky footage (6:00 AM to 8:00 PM PST) is captured by a high-resolution 360° fisheye
+                        camera mounted atop Stanford's Green Earth Sciences Building, pointing 14° south by west. The
+                        camera records crisp 2048×2048 video at 20 frames per second, with still images saved every
+                        minute.</p>
+
+                    <p><strong>Flexible Use</strong><br>
+                        Need different settings? Extract images at higher frequencies or resize them (e.g., 64×64 works
+                        well for solar forecasting). Camera settings like aperture and white balance stay fixed for
+                        consistency.</p>
+
+                    <p><strong>See It in Action</strong><br>
+                        Check out the sample images below to view skies in different weather conditions and a look at
+                        our camera setup.</p>
+                    <div class="single-image-display">
+                        <img src="../static/images/b.png" alt="Image Collection Setup" class="content-image"
+                             style="max-height: 250px;">
+                        <div class="image-caption">Photos of sky images and research equipment</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Gallery Section -->
+            <div class="gallery-section section-light">
+                <h2 class="section-title">Sample Images</h2>
+                <div class="image-gallery">
+                    <!-- Sunny Sky Samples -->
+                    <div class="gallery-column">
+                        <h3 class="category-title">Sunny Sky</h3>
+                        <div class="gallery-item">
+                            <img src="../static/images/a11.png" alt="Sunny Sky Sample 1" class="dataset-image">
+                            <div class="image-caption">Sunny Sky Sample 1</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="../static/images/a12.png" alt="Sunny Sky Sample 2" class="dataset-image">
+                            <div class="image-caption">Sunny Sky Sample 2</div>
+                        </div>
+                    </div>
+
+                    <!-- Cloudy Sky Samples -->
+                    <div class="gallery-column">
+                        <h3 class="category-title">Cloudy Sky</h3>
+                        <div class="gallery-item">
+                            <img src="../static/images/a21.png" alt="Cloudy Sky Sample 1" class="dataset-image">
+                            <div class="image-caption">Cloudy Sky Sample 1</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="../static/images/a22.png" alt="Cloudy Sky Sample 2" class="dataset-image">
+                            <div class="image-caption">Cloudy Sky Sample 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Processing -->
+            <div class="data-processing-section section-dark">
+                <h2 class="section-title">Benchmark dataset</h2>
+                <div class="section-content">
+                    <p>
+                        The benchmark dataset contains the model development set
+                        and test set obtained from the data processing Step 3 described
+                        in the above section. The samples of the benchmark dataset are
+                        organized as aligned pairs of sky images and PV power generation.
+                    </p>
+                    <div class="single-process-image">
+                        <img src="../static/images/b1.png" alt="Data Processing Flowchart">
+                        <div class="image-caption">The PV power generation data distribution of the
+                            benchmark dataset
+                        </div>
+                    </div>
+                    <p>
+                        This section presents: (A) the PV data distribution in our development set,
+                        (B) the distribution in our test set, and (C) power generation profiles comparing
+                        10 sunny days versus 10 cloudy days from the test set (with sunny days shown in
+                        the upper panel and cloudy days in the lower panel).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //a-about -->
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-grids">
+                <div class="col-md-3 footer-grid">
+                    <div class="footer-grid-heading">
+                        <h4>Address</h4>
+                    </div>
+                    <div class="footer-grid-info">
+                        <p>CDUT
+                            <span>No.1, East Third Road, Erxianqiao, Chenghua District, Chengdu, China</span>
+                        </p>
+                        <p class="phone">Phone : +18280376091
+                            <span>Email : <a href="mailto:li.wanning@student.zy.cdut.edu.cn">li.wanning@student.zy.cdut.edu.cn</a></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 footer-grid">
+                    <div class="footer-grid-heading">
+                        <h4>Navigation</h4>
+                    </div>
+                    <div class="footer-grid-info">
+                        <ul>
+                            <li><a href="https://github.com/Aura8998/solar-prediction">Codes</a></li>
+                            <li><a href="">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 footer-grid">
+                    <div class="footer-grid-heading">
+                        <h4>Special thanks</h4>
+                    </div>
+                    <div class="footer-grid-info">
+                            <p>ChengDu university of Technology & Oxford Brookes University
+                                <span>For Educational resources provided</span>
+                            </p>
+                            <br>
+                            <p>Tutor: Grace
+                                <span>For Technical guidance provided</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 footer-grid">
+                        <div class="footer-grid-heading">
+                            <h4>Follow</h4>
+                        </div>
+                        <div class="social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                                <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="copyright">
+                    <p>Copyright &copy; 2025 by Aura. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+
+	<!-- //footer -->
+</body>
+</html>
